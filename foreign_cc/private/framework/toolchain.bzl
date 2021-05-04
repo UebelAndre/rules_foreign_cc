@@ -91,8 +91,11 @@ def register_framework_toolchains():
     toolchains = []
 
     for item in TOOLCHAIN_MAPPINGS:
-        # Generate a toolchain name without the `.bzl` suffix
-        toolchain_name = "rules_foreign_cc_framework_toolchain_" + item.file.name[:-len(".bzl")]
+        if item.suffix:
+            toolchain_name = "rules_foreign_cc_framework_toolchain_" + item.suffix
+        else:
+            # Generate a toolchain name without the `.bzl` suffix
+            toolchain_name = "rules_foreign_cc_framework_toolchain_" + item.file.name[:-len(".bzl")]
 
         framework_toolchain_repository(
             name = toolchain_name,
