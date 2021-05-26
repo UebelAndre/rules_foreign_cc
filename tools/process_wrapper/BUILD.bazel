@@ -1,0 +1,16 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library")
+
+rust_library(
+    name = "process_wrapper",
+    srcs = glob(
+        ["srcs/**/*.rs"],
+        excludes = ["srcs/**/main.rs"],
+    ),
+)
+
+rust_binary(
+    name = "process_wrapper_bin",
+    srcs = ["src/main.rs"],
+    edition = "2018",
+    visibility = ["//visibility:public"],
+)

@@ -5,10 +5,14 @@ local_repository(
     path = "..",
 )
 
-load("@rules_foreign_cc//foreign_cc:repositories.bzl", "rules_foreign_cc_dependencies")
+load("//foreign_cc:repositories.bzl", "rules_foreign_cc_dependencies")
+
+rules_foreign_cc_dependencies()
+
+load("//foreign_cc:toolchains.bzl", "rules_foreign_cc_toolchains")
 
 # Don't use preinstalled tools to ensure builds are as hermetic as possible
-rules_foreign_cc_dependencies(register_preinstalled_tools = False)
+rules_foreign_cc_toolchains(register_preinstalled_tools = False)
 
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 
