@@ -6,6 +6,18 @@ load("//toolchains/native_tools:native_tools_toolchain.bzl", "native_tool_toolch
 
 package(default_visibility = ["//visibility:public"])
 
+# TODO: This should not be necessary but there appears to be some inconsistent
+# behavior with the use of `constraint_value`s in `select` statements. A support
+# thread was started at the end of https://github.com/bazelbuild/bazel/pull/12071
+# Once it is possible to replace `:windows` with `@platforms//os:windows` that
+# should be done for this file. Note actioning on this will set the minimum
+# supported version of Bazel to 4.0.0 for these toolchains.
+config_setting(
+    name = "windows",
+    constraint_values = ["@platforms//os:windows"],
+    visibility = ["//visibility:public"],
+)
+
 toolchain_type(
     name = "cmake_toolchain",
 )
@@ -63,7 +75,7 @@ toolchain(
 native_tool_toolchain(
     name = "preinstalled_make",
     path = select({
-        "@platforms//os:windows": "make.exe",
+        ":windows": "make.exe",
         "//conditions:default": "make",
     }),
 )
@@ -77,7 +89,7 @@ make_tool(
 native_tool_toolchain(
     name = "built_make",
     path = select({
-        "@platforms//os:windows": "$(execpath :make_tool)/bin/make.exe",
+        ":windows": "$(execpath :make_tool)/bin/make.exe",
         "//conditions:default": "$(execpath :make_tool)/bin/make",
     }),
     target = ":make_tool",
@@ -86,7 +98,7 @@ native_tool_toolchain(
 native_tool_toolchain(
     name = "preinstalled_cmake",
     path = select({
-        "@platforms//os:windows": "cmake.exe",
+        ":windows": "cmake.exe",
         "//conditions:default": "cmake",
     }),
 )
@@ -100,7 +112,7 @@ cmake_tool(
 native_tool_toolchain(
     name = "built_cmake",
     path = select({
-        "@platforms//os:windows": "$(execpath :cmake_tool)/bin/cmake.exe",
+        ":windows": "$(execpath :cmake_tool)/bin/cmake.exe",
         "//conditions:default": "$(execpath :cmake_tool)/bin/cmake",
     }),
     target = ":cmake_tool",
@@ -109,7 +121,7 @@ native_tool_toolchain(
 native_tool_toolchain(
     name = "preinstalled_ninja",
     path = select({
-        "@platforms//os:windows": "ninja.exe",
+        ":windows": "ninja.exe",
         "//conditions:default": "ninja",
     }),
 )
@@ -123,7 +135,7 @@ ninja_tool(
 native_tool_toolchain(
     name = "built_ninja",
     path = select({
-        "@platforms//os:windows": "$(execpath :ninja_tool)/bin/ninja.exe",
+        ":windows": "$(execpath :ninja_tool)/bin/ninja.exe",
         "//conditions:default": "$(execpath :ninja_tool)/bin/ninja",
     }),
     target = ":ninja_tool",
