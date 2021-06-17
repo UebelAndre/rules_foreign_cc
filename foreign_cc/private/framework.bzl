@@ -194,6 +194,10 @@ CC_EXTERNAL_RULE_ATTRIBUTES = {
         cfg = "exec",
         default = Label("@rules_foreign_cc//foreign_cc/private/framework:platform_info"),
     ),
+    "_allowlist_function_transition": attr.label(
+        doc = "Allows for [configuration transitions](https://docs.bazel.build/versions/4.1.0/skylark/config.html#user-defined-transitions).",
+        default = "@bazel_tools//tools/allowlists/function_transition_allowlist"
+    ),
 }
 
 # A list of common fragments required by rules using this framework
