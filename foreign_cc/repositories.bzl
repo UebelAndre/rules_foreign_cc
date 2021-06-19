@@ -4,6 +4,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 load("//foreign_cc/private/framework:toolchain.bzl", "register_framework_toolchains")
 load("//toolchains:toolchains.bzl", "built_toolchains", "prebuilt_toolchains", "preinstalled_toolchains")
+load("//tools:defs.bzl", "tools_repositories")
 
 # buildifier: disable=unnamed-macro
 def rules_foreign_cc_dependencies(
@@ -59,6 +60,8 @@ def rules_foreign_cc_dependencies(
 
     if register_preinstalled_tools:
         preinstalled_toolchains()
+
+    tools_repositories()
 
     maybe(
         http_archive,
