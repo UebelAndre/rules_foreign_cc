@@ -160,7 +160,7 @@ def _escape_dquote_cmake(text):
 
     # Context:
     # cat >> file.cmake <<EOF set(CXXFLAGS "{text}")EOF
-    return text.replace('"', r'\"\\\\\\"')
+    return text.replace('"', r'\\\\\\\"')
 
 def _create_crosstool_file_text(toolchain_dict, user_cache, user_env):
     cache_entries = _dict_copy(user_cache)
